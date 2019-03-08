@@ -1,53 +1,48 @@
+const express = require('express')
 const superagent = require('superagent')
 const cheerio = require('cheerio')
-const async = require('async')  
-const fs = require('fs')
-const url = require('url')
-const reptileUrl = 'https://juejin.im/user/58b67dd58fd9c50061238e38/shares'
 
-//superagent它是一个强大并且可读性很好的轻量级ajaxAPI
-superagent
-	.get(reptileUrl)
-	.end(function(err, res) {
-		if(err) {
-			console.log('err:', err)
-			return 
-	}
-	// res.test 包含未解析前响应内容
-	// 通过cheerio的load方法解析整个文档
-	let $ = cheerio.load(res.text)
+const app = express()
+const PORT = process.env.PORT || 8000
+const URL = 'https://cnodejs.org'
+/**
+ * 当在浏览器中访问 http://localhost:8000/ 时，输出 CNode(https://cnodejs.org/ ) 社区首页的所有帖子标题和链接，以 json 的形式。
+ */
+app.get('/', (req, res, next) => {
+  // 使用 superagent 获取 url
+  superagent.get(URL, (err, sres) => {
+    if(err) {
+      return next(err)
+    }
+    const $ = cheerio.load(sres.text)
+    const items = []
+    const $target = $('#topic_list .topic_title')
+    let itemsHtml = ''  
 
-	let data = []
-	// 下面就是和jQuery一样获取元素，遍历，组装我们需要数据，添加到数组里面
-	$('.entry-link').each(function(i, elem) {
-	    let _this = $(elem)
-	    data.push({
-	       href: _this.attr('href'),
-	       title: _this.find('h4').text()
-	       // slug: _this.find('.title').attr('href').replace(/\/p\//, ""),
-	       // author: {
-	       //     slug: _this.find('.avatar').attr('href').replace(/\/u\//, ""),
-	       //     avatar: _this.find('.avatar img').attr('src'),
-	       //     nickname: replaceText(_this.find('.blue-link').text()),
-	       //     sharedTime: _this.find('.time').attr('data-shared-at')
-	       // },
-	       // title: replaceText(_this.find('.title').text()),
-	       // abstract: replaceText(_this.find('.abstract').text()),
-	       // thumbnails: _this.find('.wrap-img img').attr('src'),
-	       // collection_tag: replaceText(_this.find('.collection-tag').text()),
-	       // reads_count: replaceText(_this.find('.ic-list-read').parent().text()) * 1,
-	       // comments_count: replaceText(_this.find('.ic-list-comments').parent().text()) * 1,
-	       // likes_count: replaceText(_this.find('.ic-list-like').parent().text()) * 1
-	   })
-	})
+    $target.each((i, item) => {
+      let $this = $(item)
+      items.push({
+        title: $this.attr('title'),
+        url: URL + $this.attr('href')
+      })
+    })
 
-	// 写入数据，文件不存在会自动创建
-	fs.writeFile(__dirname + '/data/article.json', JSON.stringify({
-		status: 0,
-		data: data
-	}), function(err) {
-		if(err) throw err;
-		console.log('写入完成')
-	})
+    console.log('items--->', items)  // 以 JSON 格式打印
+
+    if(items) {
+      $(items).each((i, item) => {
+        itemsHtml += `<li><a href="${item.url}" title="${item.title}">${item.title}</a></li>`
+      })
+        itemsHtml = `<ol id="listItem">${itemsHtml}</ol>`
+    } else {
+      itemsHtml = `<p>暂时还获取不到数据...</p>`
+    }
+
+    res.send(itemsHtml)
+  })
+  
 })
 
+app.listen(PORT, (req, res) => {
+  console.log('App is listening at port ' + PORT)
+})

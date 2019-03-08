@@ -1,20 +1,16 @@
 {
-  "name": "spider",
+  "name": "node-spider",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "dependencies": {
-    "async": "^2.0.0-rc.6",
-    "cheerio": "^0.20.0",
-    "eventproxy": "^0.3.4",
-    "express": "^4.16.4",
-    "superagent": "^2.0.0"
-  },
-  "devDependencies": {},
+  "description": "使用 superagent 与 cheerio 完成简单爬虫",
+  "main": "app.js",
   "scripts": {
-    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.4",
+    "superagent": "^4.1.0"
+  }
 }
