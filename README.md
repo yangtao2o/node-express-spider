@@ -1,11 +1,12 @@
 # Node Spider
 
-> 使用 superagent 与 cheerio 完成简单爬虫，控制并发
+> 使用 superagent 与 cheerio 完成简单爬虫，使用 async 控制并发
 
 ## 使用
 
 ```bash
 git clone https://github.com/yangtao2o/node-express-spider.git
+
 cd node-express-spider
 
 npm i
@@ -14,6 +15,8 @@ npm start
 ```
 
 运行`http://localhost:3000/`，开始获取资源，需要一时半会儿，若一直重复获取中，可重启再试，也可手动改动请求数目
+
+比如如下结果：[log-20190921](https://github.com/yangtao2o/node-express-spider/blob/master/doc/log-20190921.md)
 
 ## 题目
 
@@ -45,7 +48,7 @@ npm start
 
 * 原文：[《使用 async 控制并发》](https://github.com/alsotang/node-lessons/tree/master/lesson5)
 
-## Heroku
+### Heroku
 
 ```bash
 ➜  node-express-spider git:(master) npm i
