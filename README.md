@@ -1,5 +1,49 @@
 # Node Spider
-> 使用 superagent 与 cheerio 完成简单爬虫
+
+> 使用 superagent 与 cheerio 完成简单爬虫，控制并发
+
+## 使用
+
+```bash
+git clone https://github.com/yangtao2o/node-express-spider.git
+cd node-express-spider
+
+npm i
+
+npm start
+```
+
+运行`http://localhost:3000/`，开始获取资源，需要一时半会儿，若一直重复获取中，可重启再试，也可手动改动请求数目
+
+## 题目
+
+代码的入口是 `app.js`，当调用 `node app.js` 时，它会输出 CNode(https://cnodejs.org/ ) 社区首页的所有主题的标题，链接和第一条评论，以 json 的格式。
+
+注意：并发连接数需要控制在 5 个。
+
+输出示例：
+
+```js
+[
+  {
+    "title": "【公告】发招聘帖的同学留意一下这里",
+    "href": "http://cnodejs.org/topic/541ed2d05e28155f24676a12",
+    "comment1": "呵呵呵呵"
+  },
+  {
+    "title": "发布一款 Sublime Text 下的 JavaScript 语法高亮插件",
+    "href": "http://cnodejs.org/topic/54207e2efffeb6de3d61f68f",
+    "comment1": "沙发！"
+  }
+]
+```
+
+## 知识点
+
+1. 学习 async(https://github.com/caolan/async ) 的使用。这里有个详细的 async demo 演示：https://github.com/alsotang/async_demo
+2. 学习使用 async 来控制并发连接数。
+
+* 原文：[《使用 async 控制并发》](https://github.com/alsotang/node-lessons/tree/master/lesson5)
 
 ## Heroku
 
