@@ -4,17 +4,19 @@
   "description": "使用 superagent 与 cheerio 完成简单爬虫",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "start:pdf": "nodemon app-pdf.js port=3001"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "async": "^3.1.0",
+    "axios": "^0.26.1",
+    "body-parser": "^1.19.0",
     "cheerio": "^1.0.0-rc.2",
     "express": "^4.16.4",
-    "superagent": "^4.1.0",
-    "async": "^3.1.0",
-    "body-parser": "^1.19.0",
     "morgan": "^1.9.1",
+    "superagent": "^4.1.0",
     "url": "^0.11.0"
   },
   "devDependencies": {
